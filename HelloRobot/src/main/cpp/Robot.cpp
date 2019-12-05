@@ -10,6 +10,7 @@
 #include <frc/TimedRobot.h>
 #include <frc/drive/DifferentialDrive.h>
 #include <frc/XboxController.h>
+#include <cmath>
 
 enum MotorID {
   LEFT_DRIVE,
@@ -45,7 +46,7 @@ class Robot : public frc::TimedRobot {
   
   void TeleopPeriodic() {
     // Drive with arcade style
-    m_robotDrive.ArcadeDrive(m_gamepad.GetY(JSHand[LEFT]), m_gamepad.GetX(JSHand[LEFT]));
+    m_robotDrive.ArcadeDrive(std::pow(m_gamepad.GetY(JSHand[LEFT]), 3), std::pow(m_gamepad.GetX(JSHand[LEFT]), 3));
     m_pulleyMotor.Set(m_gamepad.GetY(JSHand[RIGHT]));
   }
 };
