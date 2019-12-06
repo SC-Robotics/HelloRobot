@@ -9,8 +9,9 @@
 #include <frc/PWMVictorSPX.h>
 #include <frc/TimedRobot.h>
 #include <frc/drive/DifferentialDrive.h>
-#include <frc/XboxController.h>
 #include <cmath>
+
+#include "XboxCompController.h"
 
 enum MotorID {
   LEFT_DRIVE,
@@ -19,31 +20,19 @@ enum MotorID {
   LIFTER
 };
 
-enum JoystickID {
-  LEFT,
-  RIGHT
-};
-
-const std::vector<frc::XboxController::JoystickHand> JSHand = {
-  frc::XboxController::JoystickHand::kLeftHand,
-  frc::XboxController::JoystickHand::kRightHand
-};
-
-const int GAMEPAD_ID = 0;
-
 class Robot : public frc::TimedRobot {
   frc::PWMVictorSPX m_leftMotor{LEFT_DRIVE};
   frc::PWMVictorSPX m_rightMotor{RIGHT_DRIVE};
   frc::PWMVictorSPX m_pulleyMotor{PULLEY};
   frc::DifferentialDrive m_robotDrive{m_leftMotor, m_rightMotor};
-  frc::XboxController m_gamepad{GAMEPAD_ID};
+  XboxCompController m_controller;
 
  public:
   
   void TeleopPeriodic() {
     // Drive with arcade style
-    m_robotDrive.ArcadeDrive(std::pow(m_gamepad.GetY(JSHand[LEFT]), 3), std::pow(m_gamepad.GetX(JSHand[LEFT]), 3));
-    m_pulleyMotor.Set(m_gamepad.GetY(JSHand[RIGHT]));
+    m_robotDrive.ArcadeDrive(std::pow(m_controller.GetMainDriveY(), 3), std::pow(m_controller.GetMainDriveX(), 3));
+    m_pulleyMotor.Set(m_controller.GetPulleySpeed());
   }
 };
 
