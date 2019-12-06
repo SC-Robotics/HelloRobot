@@ -31,10 +31,6 @@ const std::vector<frc::XboxController::JoystickHand> JSHand = {
 
 const int GAMEPAD_ID = 0;
 
-/**
- * This is a demo program showing the use of the DifferentialDrive class.
- * Runs the motors with arcade steering.
- */
 class Robot : public frc::TimedRobot {
   frc::PWMVictorSPX m_leftMotor{LEFT_DRIVE};
   frc::PWMVictorSPX m_rightMotor{RIGHT_DRIVE};
